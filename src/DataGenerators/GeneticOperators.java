@@ -1,19 +1,15 @@
 package DataGenerators;
 
-<<<<<<< HEAD
-=======
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
->>>>>>> de923f6b2e7029ded58456057949561187ab0cb7
 import java.util.Vector;
 
 public class GeneticOperators {
 
-<<<<<<< HEAD
-=======
+
 	int k = 30;
 	double archiveThreshold = 0;
 	double archiveThresholdChangeFactor = 1.0;
@@ -23,7 +19,6 @@ public class GeneticOperators {
 	List<Behaviour> toArchive;
 	double addProbability;
 	DataGenerators.Behaviour b;
->>>>>>> de923f6b2e7029ded58456057949561187ab0cb7
 	Vector<TestSuite> TestSequence;
 	
 	Vector<TestSuite> selectedTestSequence;
@@ -36,8 +31,6 @@ public class GeneticOperators {
 	
 	}
 	
-<<<<<<< HEAD
-=======
 	
 	public double testNovelty(Behaviour b) {
 		// System.err.println(b);
@@ -101,7 +94,7 @@ public class GeneticOperators {
 		}
 	}
 	
->>>>>>> de923f6b2e7029ded58456057949561187ab0cb7
+
 	public void selection(){
 		for (int i = 0; i < TestSequence.size(); i++) {
 			

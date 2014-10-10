@@ -24,103 +24,134 @@ public class NoveltyGeneration {
 	//a test suite (individual) is a set of test cases 
 	//a test case is a random call to a service with random data
 	
-	Vector<TestSuite> bestTestSuites;
-	Vector<TestSuite> TestSequence;	
-	Vector<Object> outputs;
+	Vector<TestSuite> bestTestSuites= new Vector<TestSuite>();;
 
-	int testSuiteSize;
-	int posMethod;
-	Object[] data= null;
 	Method[] methods;
-	String interfaceName; 
+	
+	
+	String javainterfaceClass;
+	String jsinterfaceClass;
+	String interfaceClass; 
 	
 	//call the different services with random data for each version
 	public void startInvoke(String javainterfaceClass,String jsinterfaceClass,String interfaceName) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, FileNotFoundException, ScriptException, NoSuchMethodException, InstantiationException{
 
-		this.interfaceName=javainterfaceClass;
-		bestTestSuites= new Vector<TestSuite>();
-		TestSequence=new Vector<TestSuite>();
-
-
-		//ScriptEngine to handle the JS versions of code
-		ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-        engine.eval( new java.io.FileReader(jsinterfaceClass));
-        Invocable inv = (Invocable) engine;
-        
+		this.interfaceClass=javainterfaceClass;
+		this.jsinterfaceClass=jsinterfaceClass;
+		this.javainterfaceClass=javainterfaceClass;
 		
-		//get all services from an interface
-        methods=getMethods(interfaceName);
+		//get all services from the given interface
+		methods=getMethods(interfaceName);
 		
-        
-        //start generation
+		//a test sequence represent a population (a set of test suites)
+		Vector<TestSuite> TestSequence= new Vector<TestSuite>();
+	
+		TestSequence=initialPopulation();
+		
+		//start generations
     	for (int k=0;k<CommonParameters.GENERATION_SIZE;k++){
-        
-        //start population
+    	//TestSequence.clear();
+    	
+    	//apply genetic operators for next generation
+        //generatePopulation(TestSequence);
+		
+		//GeneticOperators gp= new GeneticOperators(TestSequence);
+		//gp.selection();
+		//gp.crossover();
+		//gp.mutation();
+    	
+		//display all the generated test test suites
+//		displayTestSequence();
+		
+		//catch the best test suites
+		//updateBestTestSuites(TestSequence);
+
+		//display the best test suites
+		//displayBestTestSuites();
+		
+    	}//end generation
+		
+		
+	}
+	
+	public Vector<TestSuite> initialPopulation() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, FileNotFoundException, ScriptException{
+		Vector<TestSuite> TestSequence= new Vector<TestSuite>();
+		TestSuite RandomTestSuite= new TestSuite();
+		//start population
 		for (int i=0;i<CommonParameters.POPULATION_SIZE;i++){
 
-			//define an instance and a test suite size 
-			testSuiteSize=(int) (Math.random() * CommonParameters.MAX_SEQUENCE )+1;
-			TestSuite testSuite= new TestSuite();
-
-			
-			for (int j=0;j<testSuiteSize;j++){
-					
-					//define a vector to put the outputs of different versions
-					outputs=new Vector<Object>();
-					
-					//define a random choice of method
-					posMethod=(int) (Math.random() * methods.length);
-					
-					//define random data
-					data=new RandomData().getDataGenerated(methods[posMethod]);
-					
-					//invoke a random method with random data and get the outputs into a vector
-					Class<?> c = Class.forName(javainterfaceClass);
-				    Object t = c.newInstance();
-			
-					Object o =methods[posMethod].invoke(t, data);
-				    Object o1=inv.invokeFunction(methods[posMethod].getName() , data);
-				    
-				    //don't get methods with void return value
-				    if(o!=null&&o1!=null){
-				    outputs.add(o);
-				    outputs.add(o1);}
-				    
-				    //instantiate the new test case
-				    TestCase tc=new TestCase (methods[posMethod],data,outputs);
-				    
-				    //calculate its fitness value
-				    tc.calculateTestCaseFitness();
-				    
-				    //add the test case to the current test suite
-					testSuite.addTestCase(tc);				
-					
-			}//end test suite (test case)		
+			//generate one solution = a random test suite
+			RandomTestSuite=generateRandomTestSuite();				
 			
 			//calculate the test suite fitness through the fitness values of its test cases
-			testSuite.calculateTestSuiteFitness();
+			RandomTestSuite.calculateTestSuiteFitness();
 			
 			//add the test suite to the global test sequence 
-			TestSequence.add(testSuite);
+			TestSequence.add(RandomTestSuite);
 			
-			
-		 
 		}//end population
 		
 		//display all the generated test test suites
-		displayTestSequence();
+		displayTestSequence(TestSequence);
 		
 		//catch the best test suites
 		updateBestTestSuites(TestSequence);
 
 		//display the best test suites
-		displayBestTestSuites();
+		displayBestTestSuites(TestSequence);
 		
-	}//end generation
+		return TestSequence;
+	}
+	
+	public TestSuite generateRandomTestSuite() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, FileNotFoundException, ScriptException{
+		
+		TestSuite testSuite= new TestSuite();
+		Vector<Object> outputs=null;
+		int posMethod=0;
+		Object[] data= null;
+		//define an instance and a test suite size 
+		int testSuiteSize=(int) (Math.random() * CommonParameters.MAX_SEQUENCE )+1;
+		
+		for (int j=0;j<testSuiteSize;j++){
+		
+		posMethod=(int) (Math.random() * methods.length);
+		data=new RandomData().getDataGenerated(methods[posMethod]);
+	    outputs=new Vector<Object>();
+		Object o =methods[posMethod].invoke(javaScriptEngine(), data);
+	    Object o1=jsScriptEngine().invokeFunction(methods[posMethod].getName() , data);
+	    
+	  
+	    //don't get methods with void return value
+	    if(o!=null&&o1!=null){
+	    outputs.add(o);
+	    outputs.add(o1);}
+	    
+	    //instantiate the new test case
+	    TestCase tc=new TestCase (methods[posMethod],data,outputs);
+
+	    //add the test case to the current test suite
+		testSuite.addTestCase(tc);
+		}
+		return testSuite;				
+		
 		
 	}
 	
+	//ScriptEngine to handle the JS versions of code
+	public Invocable jsScriptEngine() throws FileNotFoundException, ScriptException{
+		
+				ScriptEngineManager manager = new ScriptEngineManager();
+		        ScriptEngine engine = manager.getEngineByName("JavaScript");
+		        engine.eval( new java.io.FileReader(jsinterfaceClass));
+		        Invocable inv = (Invocable) engine;
+		        return inv;
+	}
+	
+	public Object javaScriptEngine() throws FileNotFoundException, ScriptException, ClassNotFoundException, InstantiationException, IllegalAccessException{
+		Class<?> c = Class.forName(javainterfaceClass);
+		Object t = c.newInstance();
+        return t;
+}
 	
 	//get all services per interface
 	public Method[] getMethods(String interfaceName) throws ClassNotFoundException{
@@ -130,7 +161,7 @@ public class NoveltyGeneration {
 	}
 	
 	//display all the generated test test suites of one sequence (population)
-	public void displayTestSequence(){
+	public void displayTestSequence(Vector<TestSuite> TestSequence){
 		System.out.print("\n********************** all test suites **********************");
 		for (int i = 0; i < TestSequence.size() ;i++) {
 			System.out.println("\n");
@@ -146,7 +177,7 @@ public class NoveltyGeneration {
 	}
 	
 	//display the best test suites (sets of test cases) with fitness <1
-	public void displayBestTestSuites(){
+	public void displayBestTestSuites(Vector<TestSuite> TestSequence){
 		System.out.println("\n********************** best test suites **********************");
 		System.out.println("\nTotal of best test suites : "+bestTestSuites.size()+"/"+TestSequence.size() );
 		for (int i = 0; i < bestTestSuites.size() ;i++) {

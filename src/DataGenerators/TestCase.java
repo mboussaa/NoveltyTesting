@@ -19,7 +19,7 @@ public class TestCase {
 		this.m=m;
 		this.data=data;
 		this.outputs=outputs;
-		
+		calculateTestCaseFitness();
 	}
 	
 	//calculate the fitness value of one test case : intersection
