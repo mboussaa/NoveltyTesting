@@ -24,7 +24,7 @@ NB: <br>
 A test sequence (population) is a set of test suites <br>
 A test suite (individual or solution) is a set of test cases <br>
 A test case is a random call to a service with random data<br><br>
-To do so, the method newPopulation() generated random test suites and add them to a test sequence which represents the whole population.<br><br>
+To do so, the method newPopulation() generate random test suites and add them to a test sequence which represents the whole population.<br><br>
 A test suite (solution) is generated and exectued like this way : <br>
 -We define a random size for a test suite<br>
 
@@ -56,17 +56,34 @@ jsScriptEngine() & javaScriptEngine() are two methods that use the reflection AP
 	    outputs.add(o1);}
 ``` 
 
-  3- We save the new test case with its relative outputs + the updated fitness value
+  3- We save the new test case with its relative outputs + we update the fitness value
 
  ``` 
 TestCase tc=new TestCase (methods[posMethod],data,outputs);
  ``` 
- -We save in the same way test suite in the current population (sequence)
+ -We save in the same way this test suite in the current population (sequence)
  
   ``` 
  TestSequence.add(RandomTestSuite);
   ``` 
-  4- We display all the generated test test suites and the best ones those that have generated bugs
+  4- We repeat these steps until reaching a termination criterion which is the number of generations (Value defined in commons.parameters.java)<br><br>
+  public class CommonParameters {
+	
+	//the max size for a test suite (individual)
+	public static int MAX_SEQUENCE=5;
+	
+	//the population size
+	public static int POPULATION_SIZE=3;
+	
+	//the population size
+	public static int GENERATION_SIZE=3;
+	
+	//the max length of a generated string
+	public static int MAX_STRING_LENGTH=15;
+	
+}
+
+  5- We display all the generated test test suites and the best ones those that have generated bugs
   
      
        //display all the generated test test suites
