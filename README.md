@@ -13,6 +13,9 @@ Instructions
 ####Services Interface
 - Java Generated version : haxe.root/interface.java
 
+-More examples and information about the generated code from Haxe can be found here : https://github.com/mboussaa/Haxe_Samples
+
+
 ####Running
 - Commons.java : Contains the SUT & Interface name described above.<br><br>
 - Main.java : start exection taking into account the common parameters.<br><br>
