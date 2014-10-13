@@ -45,4 +45,5 @@ outputs=new Vector<Object>();
 Object o =methods[posMethod].invoke(javaScriptEngine(), data);
 Object o1=jsScriptEngine().invokeFunction(methods[posMethod].getName() , data);
 ```
-	   
+<br>
+jsScriptEngine() & javaScriptEngine() are two methods that use the reflection API of Java to invoke a method with its inputs automatically. 
