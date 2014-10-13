@@ -55,26 +55,16 @@ public class NoveltyGeneration {
     	for (int k=0;k<CommonParameters.GENERATION_SIZE;k++){
  
     	
-    	if (relevantTestSuites.size()==0){
+    	/*if (relevantTestSuites.size()==0){
     		TestSequence.clear();
     		TestSequence=newPopulation();
     		
-    	}else{
+    	}else{*/
     	  	//apply genetic operators + NS for next generation in case we detect some bugs
             generateNextPopulation(TestSequence);
     		
-    	}
-  
-    	
-		//display all the generated test test suites
-		//displayTestSequence();
-		
-		//catch the best test suites
-		//updateBestTestSuites(TestSequence);
-
-		//display the best test suites
-		//displayBestTestSuites();
-		
+    	//}
+  	
     	}//end generation
 		
 		

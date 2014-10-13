@@ -85,6 +85,7 @@ public class GeneticOperators {
 	}
 	
 	public void noveltySelection(){
+
 		for (int i = 0; i < TestSequence.size(); i++) {
 			
 		if(TestSequence.elementAt(i).tc.size()>0){
@@ -96,11 +97,15 @@ public class GeneticOperators {
 	
 
 	public void selection(){
+		selectedTestSequence= new Vector<TestSuite>();
+		
 		for (int i = 0; i < TestSequence.size(); i++) {
-			
+	
 		if(TestSequence.elementAt(i).getTestSuiteFitnessValue()<1){
+			//System.out.println(TestSequence.elementAt(i).getTestSuiteFitnessValue());
+			//System.exit(0);
 			selectedTestSequence.add(TestSequence.elementAt(i));
-			 
+			
 			}
 		}
 	}
@@ -117,13 +122,8 @@ public class GeneticOperators {
 						//System.out.println("");	
 						//TestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
 					}
-					
 					//TestSequence.elementAt(i).displayFitnessTestSuite();
 				}
-				
-				
-				
-			
 		}
 
 	
