@@ -94,4 +94,7 @@ TestCase tc=new TestCase (methods[posMethod],data,outputs);
 
 		//display the best test suites
 		displayBestTestSuites(TestSequence);
+		
+####Novelty search adaptation
+Until now, we have described only a random approach that loads basically some services through an interface then generate random data to fulfill an initial population of test data. To generate the next generation we are going to apply the novelty search to explore the huge space of test data.
 		 
