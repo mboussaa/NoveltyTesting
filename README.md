@@ -27,14 +27,3 @@ A test case is a random call to a service with random data<br><br>
 To do so, the method newPopulation() generated random test suites and add them to a test sequence which represents the whole population.<br><br>
 A test suite (solution) is generated and exectued like this way : <br>
 -We define a random size for a test suite<br>
-
-```testSuiteSize=(int) (Math.random() * CommonParameters.MAX_SEQUENCE )+1;
-  ```
-  <br>
--We generate random data taking into account the datatypes of the service inputs<br>
-```data=new RandomData().getDataGenerated(methods[posMethod]);
- ```<br>
- -We exectute the generated data on top of different generated versions Js & Java<br>
- ``` outputs=new Vector<Object>();
-		Object o =methods[posMethod].invoke(javaScriptEngine(), data);
-	    Object o1=jsScriptEngine().invokeFunction(methods[posMethod].getName() , data);```<br>
