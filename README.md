@@ -32,7 +32,7 @@ A test suite (solution) is generated and exectued like this way : <br>
 testSuiteSize=(int) (Math.random() * CommonParameters.MAX_SEQUENCE )+1;
   ```
   <br>
--We generate random data taking into account the datatypes of the service inputs. The randomData class is responsible for this generation<br>
+-We generate random data taking into account the datatypes of the service inputs. The randomData class is responsible for doing this<br>
 
 ```
 data=new RandomData().getDataGenerated(methods[posMethod]);
