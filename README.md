@@ -6,8 +6,9 @@ Testing of JS & Java code generated from Haxe
 Instructions
 -----
 ####System Under Test (Services)
--generatedjs.js <br>
--haxe.root/Functions.java
+- JS version : generatedjs.js 
+- Java version : haxe.root/Functions.java
+- Cpp version : ./cpp (not already used)
 
 ####Services Interface
--haxe.root/interface.java
+- haxe.root/interface.java
