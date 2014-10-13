@@ -24,8 +24,11 @@ public class NoveltyGeneration {
 	//a test suite (individual) is a set of test cases 
 	//a test case is a random call to a service with random data
 	
-	Vector<TestSuite> bestTestSuites= new Vector<TestSuite>();;
-
+	Vector<TestSuite> bestTestSuites= new Vector<TestSuite>();
+	Vector<TestSuite> relevantTestSuites= new Vector<TestSuite>();
+	
+	Vector<TestSuite> TestSequence= new Vector<TestSuite>();
+	
 	Method[] methods;
 	
 	
@@ -44,24 +47,27 @@ public class NoveltyGeneration {
 		methods=getMethods(interfaceName);
 		
 		//a test sequence represent a population (a set of test suites)
-		Vector<TestSuite> TestSequence= new Vector<TestSuite>();
+		
 	
-		TestSequence=initialPopulation();
+		TestSequence=newPopulation();
 		
 		//start generations
     	for (int k=0;k<CommonParameters.GENERATION_SIZE;k++){
-    	//TestSequence.clear();
+ 
     	
-    	//apply genetic operators for next generation
-        //generatePopulation(TestSequence);
-		
-		//GeneticOperators gp= new GeneticOperators(TestSequence);
-		//gp.selection();
-		//gp.crossover();
-		//gp.mutation();
+    	if (relevantTestSuites.size()==0){
+    		TestSequence.clear();
+    		TestSequence=newPopulation();
+    		
+    	}else{
+    	  	//apply genetic operators + NS for next generation in case we detect some bugs
+            generateNextPopulation(TestSequence);
+    		
+    	}
+  
     	
 		//display all the generated test test suites
-//		displayTestSequence();
+		//displayTestSequence();
 		
 		//catch the best test suites
 		//updateBestTestSuites(TestSequence);
@@ -74,7 +80,14 @@ public class NoveltyGeneration {
 		
 	}
 	
-	public Vector<TestSuite> initialPopulation() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, FileNotFoundException, ScriptException{
+	public void generateNextPopulation(Vector<TestSuite> TestSequence){
+		GeneticOperators gp= new GeneticOperators(TestSequence);
+		gp.selection();
+		gp.crossover();
+		gp.mutation();
+	}
+	
+	public Vector<TestSuite> newPopulation() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, FileNotFoundException, ScriptException{
 		Vector<TestSuite> TestSequence= new Vector<TestSuite>();
 		TestSuite RandomTestSuite= new TestSuite();
 		//start population
@@ -200,6 +213,7 @@ public class NoveltyGeneration {
 			
 			if(TestSequence.elementAt(i).getTestSuiteFitnessValue()<1){
 			bestTestSuites.add(TestSequence.elementAt(i));
+			relevantTestSuites.add(TestSequence.elementAt(i));
 			 
 			}
 			Collections.sort(bestTestSuites);

@@ -107,7 +107,7 @@ public class GeneticOperators {
 	
 	public void mutation(){
 		outputs=new Vector<Object>();
-			if (selectedTestSequence.size()>0) {
+
 				
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
 			
@@ -123,7 +123,7 @@ public class GeneticOperators {
 				
 				
 				
-			}
+			
 		}
 
 	
