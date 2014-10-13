@@ -67,7 +67,9 @@ TestCase tc=new TestCase (methods[posMethod],data,outputs);
  TestSequence.add(RandomTestSuite);
   ``` 
   4- We repeat these steps until reaching a termination criterion which is the number of generations (Value defined in commons.parameters.java)<br><br>
-  public class CommonParameters {
+  
+  	
+	public class CommonParameters {
 	
 	//the max size for a test suite (individual)
 	public static int MAX_SEQUENCE=5;
@@ -81,7 +83,8 @@ TestCase tc=new TestCase (methods[posMethod],data,outputs);
 	//the max length of a generated string
 	public static int MAX_STRING_LENGTH=15;
 	
-}
+	}
+	
 
   5- We display all the generated test test suites and the best ones those that have generated bugs
   
