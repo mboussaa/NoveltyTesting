@@ -9,7 +9,7 @@ public class CommonParameters {
 	public static int POPULATION_SIZE=3;
 	
 	//the population size
-	public static int GENERATION_SIZE=3;
+	public static int GENERATION_SIZE=4;
 	
 	//the max length of a generated string
 	public static int MAX_STRING_LENGTH=15;

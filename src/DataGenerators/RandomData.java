@@ -28,22 +28,22 @@ public class RandomData {
 			t=types[pos].getName();
 			
 			if (t.equals("int")){
-				dataGenerated[pos]=generateInt();			
+				dataGenerated[pos]=mutateInt();			
 			}
 			if (t.equals("long")){
-				dataGenerated[pos]=generateLong();		
+				dataGenerated[pos]=mutateLong();		
 			}
 			if (t.equals("boolean")){
-				dataGenerated[pos]=generateBoolean();			
+				dataGenerated[pos]=mutateBoolean();			
 			}
 			if (t.equals("char")){
-				dataGenerated[pos]=generateChar();			
+				dataGenerated[pos]=mutateChar();			
 			}
 			if (t.equals("float")){
-				dataGenerated[pos]=generateFloat();			
+				dataGenerated[pos]=mutateFloat();			
 			}
 			if (t.equals("java.lang.String")){
-				dataGenerated[pos]=generateString();			
+				dataGenerated[pos]=mutateString();			
 			}
 		}
 		
@@ -171,5 +171,95 @@ public class RandomData {
 	public int random(int x) {		
 	      return (int) (Math.random() * x );
 	    }
+	
+	
+	//*************Mutation*************
+	
+	//Generate random string
+    public String mutateString() {
+		Random r=new Random();
+		int length = r.nextInt(CommonParameters.MAX_STRING_LENGTH);
+    	String chars = "abcdefghijklmnopqrstuvwxyz1234567890";
+    	//String caracteres ="²12345MWXCVBN67890°+&é'(-è_azertyuiçà)=~#{[|`\\opqsdf^@]}¤¨£%µghjklm§/.?<>AZERTwxcYUIOPQSDvbnFGHJKL";
+    	int charLength = chars.length();
+        StringBuilder  pass = new StringBuilder (charLength);
+        for (int x = 0; x < length; x++) {
+            int i = (int) (Math.random() * charLength);
+            pass.append(chars.charAt(i));
+        }
+        return pass.toString();
+    }
+    
+	//Generate random Char
+    public char mutateChar() {
+    	
+    	String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    	//String caracteres ="²12345MWXCVBN67890°+&é'(-è_azertyuiçà)=~#{[|`\\opqsdf^@]}¤¨£%µghjklm§/.?<>AZERTwxcYUIOPQSDvbnFGHJKL";
+    	char pass;
+    
+         int i = (int) (Math.random() * chars.length());
+         pass=chars.charAt(i);
+        
+        return pass;
+    }
+	
+	//Generate random Int
+	public int mutateInt() {
+		int n;
+		Random rand = new Random(); 
+		
+		n=rand.nextInt();
+		
+      return n;
+    }
+	
+	//Generate random Float
+	public float mutateFloat() {
+	
+		float min = Float.MIN_VALUE;
+		float max =  Float.MAX_VALUE;
+
+		Random ra = new Random();
+
+		float finalX = min + ra.nextFloat() * (max - min);
+		
+	  return finalX;
+    }
+
+	//Generate random Long
+	public long mutateLong() {
+
+		Random ra = new Random();
+
+		double m = Math.random();
+		long l = ra.nextLong();
+
+		long finalX =  (long)(m* l);
+		
+	  return finalX;
+    }
+	
+	//Generate random Boolean
+	public Boolean mutateBoolean() {
+	
+		Random rand = new Random(); 
+		Boolean n=rand.nextBoolean();
+		
+      return n;
+    }
+	
+	//Generate random Double
+	public double mutateDouble() {
+		
+		double min = Double.MIN_VALUE;
+		double max =  Double.MAX_VALUE;
+
+		Random ra = new Random();
+
+		double finalX = min + ra.nextDouble() * (max - min);
+		
+	  return finalX;
+    }
+	
 	
 }

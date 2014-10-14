@@ -19,15 +19,19 @@ public class GeneticOperators {
 	List<Behaviour> toArchive;
 	double addProbability;
 	DataGenerators.Behaviour b;
-	Vector<TestSuite> TestSequence;
-	
-	Vector<TestSuite> selectedTestSequence;
-	
 	Vector<Object> outputs;
+	
+	
+	Vector<TestSuite> TestSequence;
+	Vector<TestSuite> selectedTestSequence;
+	int testSequenceSize;
+	int selectedTestSequenceSize;
+	
 	
 	public GeneticOperators(Vector<TestSuite> TestSequence){
 	
 		this.TestSequence=TestSequence;	
+		this.testSequenceSize=TestSequence.size();
 	
 	}
 	
@@ -102,23 +106,27 @@ public class GeneticOperators {
 		for (int i = 0; i < TestSequence.size(); i++) {
 	
 		if(TestSequence.elementAt(i).getTestSuiteFitnessValue()<1){
-			//System.out.println(TestSequence.elementAt(i).getTestSuiteFitnessValue());
-			//System.exit(0);
+			
 			selectedTestSequence.add(TestSequence.elementAt(i));
 			
 			}
 		}
+		selectedTestSequenceSize=selectedTestSequence.size();
+		
+		//System.out.println(selectedTestSequenceSize);
+		//System.exit(0);
 	}
 	
 	public void mutation(){
 		outputs=new Vector<Object>();
 
-				
+		//System.out.println(selectedTestSequenceSize);
+		//System.exit(0);
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
 			
 					for (int j = 0; j < selectedTestSequence.elementAt(i).tc.size(); j++) {
 						
-						Object[] data=new RandomData().getDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m);
+						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m,selectedTestSequence.elementAt(i).tc.get(j).data);
 						//System.out.println("");	
 						//TestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
 					}
