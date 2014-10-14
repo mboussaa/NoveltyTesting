@@ -67,7 +67,7 @@ public class NoveltyGeneration {
   	
     	}//end generation
 		
-		
+
 	}
 	
 	public void generateNextPopulation(Vector<TestSuite> TestSequence){

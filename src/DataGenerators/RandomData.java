@@ -20,30 +20,33 @@ public class RandomData {
 		Object[] mutatedDataGenerated=dataGenerated;
 		//int pos=random(dataGenerated.length);
 		String t=""; 
-		int pos;
+		//int pos;
 		
-		for (int i=0;i<(dataGenerated.length)/2;i++){
+		//System.out.println(types.length+" fin "+mutatedDataGenerated.length);
+		//System.exit(0);
+		
+		for (int i=0;i<types.length;i++){
 			
-			pos=random(dataGenerated.length);
-			t=types[pos].getName();
+			//pos=random(dataGenerated.length);
+			t=types[i].getName();
 			
 			if (t.equals("int")){
-				dataGenerated[pos]=mutateInt();			
+				dataGenerated[i]=mutateInt();			
 			}
 			if (t.equals("long")){
-				dataGenerated[pos]=mutateLong();		
+				dataGenerated[i]=mutateLong();		
 			}
 			if (t.equals("boolean")){
-				dataGenerated[pos]=mutateBoolean();			
+				dataGenerated[i]=mutateBoolean();			
 			}
 			if (t.equals("char")){
-				dataGenerated[pos]=mutateChar();			
+				dataGenerated[i]=mutateChar();			
 			}
 			if (t.equals("float")){
-				dataGenerated[pos]=mutateFloat();			
+				dataGenerated[i]=mutateFloat();			
 			}
 			if (t.equals("java.lang.String")){
-				dataGenerated[pos]=mutateString();			
+				dataGenerated[i]=mutateString();			
 			}
 		}
 		
