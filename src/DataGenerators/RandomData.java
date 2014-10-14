@@ -35,22 +35,22 @@ public class RandomData {
 			t=types[i].getName();
 			
 			if (t.equals("int")){
-				mutatedDataGenerated[i]=mutateInt(dataGenerated[i]);			
+				mutatedDataGenerated[i]=mutateInt(Integer.parseInt(dataGenerated[i].toString()));			
 			}
 			if (t.equals("long")){
-				dataGenerated[i]=mutateLong(dataGenerated[i]);		
+				dataGenerated[i]=mutateLong(Long.parseLong(dataGenerated[i].toString()));		
 			}
 			if (t.equals("boolean")){
-				dataGenerated[i]=mutateBoolean(dataGenerated[i]);			
+				dataGenerated[i]=mutateBoolean(Boolean.parseBoolean(dataGenerated[i].toString()));			
 			}
 			if (t.equals("char")){
-				dataGenerated[i]=mutateChar(dataGenerated[i]);			
+				dataGenerated[i]=mutateChar(dataGenerated[i].toString());			
 			}
 			if (t.equals("float")){
-				dataGenerated[i]=mutateFloat(dataGenerated[i]);			
+				dataGenerated[i]=mutateFloat(Float.parseFloat(dataGenerated[i].toString()));			
 			}
 			if (t.equals("java.lang.String")){
-				dataGenerated[i]=mutateString(dataGenerated[i]);			
+				dataGenerated[i]=mutateString(dataGenerated[i].toString());			
 			}
 		}
 		
@@ -183,22 +183,23 @@ public class RandomData {
 	//*************Mutation*************
 	
 	//Generate random string
-    public String mutateString(Object dataGenerated) {
-		Random r=new Random();
-		int length = r.nextInt(CommonParameters.MAX_STRING_LENGTH);
+    public String mutateString(String dataGenerated) {
     	String chars = "abcdefghijklmnopqrstuvwxyz1234567890";
-    	//String caracteres ="²12345MWXCVBN67890°+&é'(-è_azertyuiçà)=~#{[|`\\opqsdf^@]}¤¨£%µghjklm§/.?<>AZERTwxcYUIOPQSDvbnFGHJKL";
-    	int charLength = chars.length();
-        StringBuilder  pass = new StringBuilder (charLength);
-        for (int x = 0; x < length; x++) {
-            int i = (int) (Math.random() * charLength);
-            pass.append(chars.charAt(i));
+		int pos;
+		//int length = r.nextInt(CommonParameters.MAX_STRING_LENGTH);
+		int length = dataGenerated.length();
+		for (int x = 0; x < dataGenerated.length()/2; x++) {
+			pos= random(dataGenerated.length());
+			//dataGenerated.charAt(x) =chars.charAt(0); 
+
         }
-        return pass.toString();
+		
+		
+        return chars;
     }
     
 	//Generate random Char
-    public char mutateChar(Object dataGenerated) {
+    public char mutateChar(String dataGenerated) {
     	
     	String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     	//String caracteres ="²12345MWXCVBN67890°+&é'(-è_azertyuiçà)=~#{[|`\\opqsdf^@]}¤¨£%µghjklm§/.?<>AZERTwxcYUIOPQSDvbnFGHJKL";
@@ -211,7 +212,7 @@ public class RandomData {
     }
 	
 	//Generate random Int
-	public int mutateInt(Object dataGenerated) {
+	public int mutateInt(int dataGenerated) {
 		int n;
 		Random rand = new Random(); 
 		
@@ -221,7 +222,7 @@ public class RandomData {
     }
 	
 	//Generate random Float
-	public float mutateFloat(Object dataGenerated) {
+	public float mutateFloat(float dataGenerated) {
 	
 		float min = Float.MIN_VALUE;
 		float max =  Float.MAX_VALUE;
@@ -234,7 +235,7 @@ public class RandomData {
     }
 
 	//Generate random Long
-	public long mutateLong(Object dataGenerated) {
+	public long mutateLong(long dataGenerated) {
 
 		Random ra = new Random();
 
@@ -247,7 +248,7 @@ public class RandomData {
     }
 	
 	//Generate random Boolean
-	public Boolean mutateBoolean(Object dataGenerated) {
+	public Boolean mutateBoolean(boolean dataGenerated) {
 	
 		Random rand = new Random(); 
 		Boolean n=rand.nextBoolean();
@@ -256,7 +257,7 @@ public class RandomData {
     }
 	
 	//Generate random Double
-	public double mutateDouble(Object dataGenerated) {
+	public double mutateDouble(double dataGenerated) {
 		
 		double min = Double.MIN_VALUE;
 		double max =  Double.MAX_VALUE;
