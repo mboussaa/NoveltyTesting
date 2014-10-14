@@ -24,6 +24,8 @@ public class GeneticOperators {
 	
 	Vector<TestSuite> TestSequence;
 	Vector<TestSuite> selectedTestSequence;
+	Vector<TestSuite> newTestSequence;
+	
 	int testSequenceSize;
 	int selectedTestSequenceSize;
 	
