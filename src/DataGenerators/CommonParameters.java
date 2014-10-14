@@ -14,4 +14,7 @@ public class CommonParameters {
 	//the max length of a generated string
 	public static int MAX_STRING_LENGTH=15;
 	
+	//the range for numbers mutations
+	public static int RANGE_NUMBERS_MUTATION=5;
+	
 }
