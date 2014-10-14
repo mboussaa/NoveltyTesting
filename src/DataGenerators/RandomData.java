@@ -13,7 +13,6 @@ public class RandomData {
 	
 	//constructor used to generate random data for each method given as a parameter
 	public RandomData(){
-		mutateFloat(10f);
 	}
 	
 	public Object[] getMutationDataGenerated(Method m, Object[] dataGenerated){
@@ -38,19 +37,19 @@ public class RandomData {
 				mutatedDataGenerated[i]=mutateInt(Integer.parseInt(dataGenerated[i].toString()));			
 			}
 			if (t.equals("long")){
-				dataGenerated[i]=mutateLong(Long.parseLong(dataGenerated[i].toString()));		
+				mutatedDataGenerated[i]=mutateLong(Long.parseLong(dataGenerated[i].toString()));		
 			}
 			if (t.equals("boolean")){
-				dataGenerated[i]=mutateBoolean(Boolean.parseBoolean(dataGenerated[i].toString()));			
+				mutatedDataGenerated[i]=mutateBoolean(Boolean.parseBoolean(dataGenerated[i].toString()));			
 			}
 			if (t.equals("char")){
-				dataGenerated[i]=mutateChar(dataGenerated[i].toString().charAt(0));			
+				mutatedDataGenerated[i]=mutateChar(dataGenerated[i].toString().charAt(0));			
 			}
 			if (t.equals("float")){
-				dataGenerated[i]=mutateFloat(Float.parseFloat(dataGenerated[i].toString()));			
+				mutatedDataGenerated[i]=mutateFloat(Float.parseFloat(dataGenerated[i].toString()));			
 			}
 			if (t.equals("java.lang.String")){
-				dataGenerated[i]=mutateString(dataGenerated[i].toString());			
+				mutatedDataGenerated[i]=mutateString(dataGenerated[i].toString());			
 			}
 		}
 		
@@ -223,16 +222,8 @@ public class RandomData {
 		
 		int min = dataGenerated-CommonParameters.RANGE_NUMBERS_MUTATION;
 		int max =  dataGenerated+CommonParameters.RANGE_NUMBERS_MUTATION;
-		
-		
-		Random ra = new Random();
 
-		int finalX = min + ra.nextInt() * (max - min);
-		
-		//int n;
-		//Random rand = new Random(); 
-		
-		//n=rand.nextInt();
+		int finalX=(int) (min + (Math.random() * (max - min)));
 
       return finalX;
     }
@@ -247,43 +238,37 @@ public class RandomData {
 
 		float finalX = min + ra.nextFloat() * (max - min);
 		
-		System.out.println(dataGenerated+" fin "+finalX);
-		System.exit(0);
+
 	  return finalX;
     }
 
 	//Generate random Long
 	public long mutateLong(long dataGenerated) {
 
-		Random ra = new Random();
+		long min = dataGenerated-CommonParameters.RANGE_NUMBERS_MUTATION;
+		long max =  dataGenerated+CommonParameters.RANGE_NUMBERS_MUTATION;
 
-		double m = Math.random();
-		long l = ra.nextLong();
+		long finalX=(long) (min + (Math.random() * (max - min)));
 
-		long finalX =  (long)(m* l);
-		
 	  return finalX;
     }
 	
 	//Generate random Boolean
 	public Boolean mutateBoolean(boolean dataGenerated) {
-	
-		Random rand = new Random(); 
-		Boolean n=rand.nextBoolean();
-		
-      return n;
+
+      return !dataGenerated;
     }
 	
 	//Generate random Double
 	public double mutateDouble(double dataGenerated) {
 		
-		double min = Double.MIN_VALUE;
-		double max =  Double.MAX_VALUE;
+		double min = dataGenerated-CommonParameters.RANGE_NUMBERS_MUTATION;
+		double max =  dataGenerated+CommonParameters.RANGE_NUMBERS_MUTATION;
 
 		Random ra = new Random();
 
 		double finalX = min + ra.nextDouble() * (max - min);
-		
+
 	  return finalX;
     }
 	

@@ -127,6 +127,7 @@ public class GeneticOperators {
 					for (int j = 0; j < selectedTestSequence.elementAt(i).tc.size(); j++) {
 						
 						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m,selectedTestSequence.elementAt(i).tc.get(j).data);
+						selectedTestSequence.elementAt(i).tc.get(j).setData(data);
 						//System.out.println("");	
 						//TestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
 					}
