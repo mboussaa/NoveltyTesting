@@ -127,7 +127,7 @@ public class GeneticOperators {
 	}
 	
 	public void mutation(){
-		outputs=new Vector<Object>();
+
 
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
 			
@@ -146,24 +146,45 @@ public class GeneticOperators {
 
 	
 	public void crossover(){
-		if (selectedTestSequence.size()>0) {
-			
-			for (int i = 0; i < selectedTestSequence.size() ;i++) {
 		
-				for (int j = 0; j < selectedTestSequence.elementAt(i).tc.size(); j++) {
-					
-					Object[] data=new RandomData().getDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m);
-					//System.out.println("");	
-					//TestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
-				}
-				
-				//TestSequence.elementAt(i).displayFitnessTestSuite();
-			}
+		int crossoverPoint = 0;
+		int crossoverMethodPosition = 0;
+		Object permute=null;
+		
+		if (selectedTestSequenceSize>1) {
 			
+			for (int i = 0; i < selectedTestSequenceSize-1 ;i++) {
+				
+			    //crossoverPoint= 0;
+				crossoverMethodPosition= (int) (Math.random() * selectedTestSequence.elementAt(i).tc.size());
+				crossoverPoint= (int) (Math.random() * selectedTestSequence.elementAt(i).tc.elementAt(crossoverMethodPosition).data.length);
+				
+				
+				permute=selectedTestSequence.elementAt(i).tc.elementAt(crossoverMethodPosition).data[crossoverPoint];
+				selectedTestSequence.elementAt(i).tc.elementAt(crossoverMethodPosition).data[crossoverPoint]=selectedTestSequence.elementAt(i+1).tc.elementAt(crossoverMethodPosition).data[crossoverPoint];
+				selectedTestSequence.elementAt(i+1).tc.elementAt(crossoverMethodPosition).data[crossoverPoint]=permute;
+				
+				
+				//System.out.println(selectedTestSequence.elementAt(i).tc.elementAt(crossoverMethodPosition).m.getName());
+				//System.out.println(crossoverMethodPosition);
+				//System.out.println(crossoverPoint);
+				//System.out.println(selectedTestSequence.elementAt(i).tc.elementAt(crossoverMethodPosition).data[crossoverPoint]);
+				//System.out.println(selectedTestSequence.elementAt(i+1).tc.elementAt(crossoverMethodPosition).data[crossoverPoint]);
+				//System.out.println();
+					//Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m,selectedTestSequence.elementAt(i).tc.get(j).data);
+					//selectedTestSequence.elementAt(i).tc.get(j).setData(data);
+
+					//TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.get(j).m,data,null);
+
+					//testSuite.addTestCase(tc);
+				
+				}
+				//newTestSequence.add(testSuite);
+			}//System.exit(0);
 			
 			
 		}
-	}
+	
 	
 	public Vector<TestSuite> getNewTestSequence(){
 		Vector<TestSuite> t=null;

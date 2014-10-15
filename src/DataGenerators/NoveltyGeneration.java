@@ -113,15 +113,15 @@ public class NoveltyGeneration {
 		int posMethod=0;
 		Object[] data= null;
 		//define an instance and a test suite size 
-		int testSuiteSize=(int) (Math.random() * CommonParameters.MAX_SEQUENCE )+1;
-		
+		int testSuiteSize=methods.length;
+
 		for (int j=0;j<testSuiteSize;j++){
 		
-		posMethod=(int) (Math.random() * methods.length);
-		data=new RandomData().getDataGenerated(methods[posMethod]);
+		//posMethod=(int) (Math.random() * methods.length);
+		data=new RandomData().getDataGenerated(methods[j]);
 	    outputs=new Vector<Object>();
-		Object o =methods[posMethod].invoke(javaScriptEngine(), data);
-	    Object o1=jsScriptEngine().invokeFunction(methods[posMethod].getName() , data);
+		Object o =methods[j].invoke(javaScriptEngine(), data);
+	    Object o1=jsScriptEngine().invokeFunction(methods[j].getName() , data);
 	    
 	  
 	    //don't get methods with void return value
@@ -130,7 +130,7 @@ public class NoveltyGeneration {
 	    outputs.add(o1);}
 	    
 	    //instantiate the new test case
-	    TestCase tc=new TestCase (methods[posMethod],data,outputs);
+	    TestCase tc=new TestCase (methods[j],data,outputs);
 
 	    //add the test case to the current test suite
 		testSuite.addTestCase(tc);

@@ -2,9 +2,6 @@ package DataGenerators;
 
 public class CommonParameters {
 	
-	//the max size for a test suite (individual)
-	public static int MAX_SEQUENCE=5;
-	
 	//the population size
 	public static int POPULATION_SIZE=3;
 	
