@@ -58,9 +58,9 @@ public class TestCase {
 		for (int i = 0; i < data.length; i++) {
 			System.out.println(" Input : "+data[i] );
 		}
-		//for (int i = 0; i < outputs.size(); i++) {
-		//	System.out.println(" Output "+(i+1)+" : "+this.outputs.elementAt(i));
-		//}
+		for (int i = 0; i < outputs.size(); i++) {
+			System.out.println(" Output "+(i+1)+" : "+this.outputs.elementAt(i));
+		}
 		System.out.println(" Fitness value : "+this.testCaseFitnessValue );
 
 		

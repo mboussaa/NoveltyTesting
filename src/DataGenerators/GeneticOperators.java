@@ -3,6 +3,7 @@ package DataGenerators;
 
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +26,10 @@ public class GeneticOperators {
 	List<Behaviour> toArchive;
 	double addProbability;
 	DataGenerators.Behaviour b;
-	Vector<Object> outputs;
+
 	
+	String javainterfaceClass;
+	String jsinterfaceClass;
 	
 	Vector<TestSuite> TestSequence;
 	Vector<TestSuite> selectedTestSequence;
@@ -37,8 +40,10 @@ public class GeneticOperators {
 	int selectedTestSequenceSize;
 	
 	
-	public GeneticOperators(Vector<TestSuite> TestSequence){
-
+	public GeneticOperators(Vector<TestSuite> TestSequence,String javainterfaceClass,String jsinterfaceClass){
+		this.javainterfaceClass=javainterfaceClass;
+		this.jsinterfaceClass=jsinterfaceClass;
+		
 		this.TestSequence=TestSequence;	
 		this.testSequenceSize=TestSequence.size();
 	
@@ -126,8 +131,8 @@ public class GeneticOperators {
 		//System.exit(0);
 	}
 	
-	public Vector<TestSuite> mutation(){
-		
+	public Vector<TestSuite> mutation() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, FileNotFoundException, ClassNotFoundException, InstantiationException, ScriptException, NoSuchMethodException{
+		Vector<Object> outputs=null;
 		do{
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
 					TestSuite testSuite= new TestSuite();
@@ -136,7 +141,18 @@ public class GeneticOperators {
 						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.elementAt(j).m,selectedTestSequence.elementAt(i).tc.elementAt(j).data);
 						//selectedTestSequence.elementAt(i).tc.get(j).setData(data);
 
-						TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.elementAt(j).m,data,null);
+					    outputs=new Vector<Object>();
+						Object o =selectedTestSequence.elementAt(i).tc.elementAt(j).m.invoke(javaScriptEngine(), data);
+					    Object o1=jsScriptEngine().invokeFunction(selectedTestSequence.elementAt(i).tc.elementAt(j).m.getName() , data);
+					    
+					  
+					    //don't get methods with void return value
+					    if(o!=null&&o1!=null){
+					    outputs.add(o);
+					    outputs.add(o1);}
+						
+						
+						TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.elementAt(j).m,data,outputs);
 
 						testSuite.addTestCase(tc);
 					}
@@ -205,6 +221,22 @@ public class GeneticOperators {
 		Vector<TestSuite> t=null;
 		return t;
 	}
+	
+	//ScriptEngine to handle the JS versions of code
+	public Invocable jsScriptEngine() throws FileNotFoundException, ScriptException{
+		
+				ScriptEngineManager manager = new ScriptEngineManager();
+		        ScriptEngine engine = manager.getEngineByName("JavaScript");
+		        engine.eval( new java.io.FileReader(jsinterfaceClass));
+		        Invocable inv = (Invocable) engine;
+		        return inv;
+	}
+	
+	public Object javaScriptEngine() throws FileNotFoundException, ScriptException, ClassNotFoundException, InstantiationException, IllegalAccessException{
+		Class<?> c = Class.forName(javainterfaceClass);
+		Object t = c.newInstance();
+        return t;
+}
 }
 
 	

@@ -57,24 +57,24 @@ public class NoveltyGeneration {
     	for (int k=0;k<CommonParameters.GENERATION_SIZE;k++){
  
     	
-    	/*if (relevantTestSuites.size()==0){
+    	if (relevantTestSuites.size()==0){
     		TestSequence.clear();
     		TestSequence=newPopulation();
     		
-    	}else{*/
+    	}else{
     	  	//apply genetic operators + NS for next generation in case we detect some bugs
     	newTestSequence=generateNextPopulation(TestSequence);
     		
-    	//}
+    	}
   	
     	}//end generation
 		
 
 	}
 	
-	public Vector<TestSuite> generateNextPopulation(Vector<TestSuite> TestSequence){
+	public Vector<TestSuite> generateNextPopulation(Vector<TestSuite> TestSequence) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, FileNotFoundException, ClassNotFoundException, InstantiationException, NoSuchMethodException, ScriptException{
 		
-		GeneticOperators gp= new GeneticOperators(TestSequence);
+		GeneticOperators gp= new GeneticOperators(TestSequence,javainterfaceClass,jsinterfaceClass);
 		gp.selection();
 		gp.crossover();
 		newTestSequence=gp.mutation();
