@@ -2,10 +2,16 @@ package DataGenerators;
 
 
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 public class GeneticOperators {
 
@@ -24,14 +30,15 @@ public class GeneticOperators {
 	
 	Vector<TestSuite> TestSequence;
 	Vector<TestSuite> selectedTestSequence;
-	Vector<TestSuite> newTestSequence;
+	Vector<TestSuite> newTestSequence= new Vector<TestSuite>();;
+	TestSuite testSuite= new TestSuite();
 	
 	int testSequenceSize;
 	int selectedTestSequenceSize;
 	
 	
 	public GeneticOperators(Vector<TestSuite> TestSequence){
-	
+
 		this.TestSequence=TestSequence;	
 		this.testSequenceSize=TestSequence.size();
 	
@@ -122,18 +129,18 @@ public class GeneticOperators {
 	public void mutation(){
 		outputs=new Vector<Object>();
 
-		//System.out.println(selectedTestSequenceSize);
-		//System.exit(0);
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
 			
 					for (int j = 0; j < selectedTestSequence.elementAt(i).tc.size(); j++) {
 						
 						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m,selectedTestSequence.elementAt(i).tc.get(j).data);
-						selectedTestSequence.elementAt(i).tc.get(j).setData(data);
-						//System.out.println("");	
-						//TestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
+						//selectedTestSequence.elementAt(i).tc.get(j).setData(data);
+
+						//TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.get(j).m,data,null);
+
+						//testSuite.addTestCase(tc);
 					}
-					//TestSequence.elementAt(i).displayFitnessTestSuite();
+					//newTestSequence.add(testSuite);
 				}
 		}
 
@@ -165,8 +172,7 @@ public class GeneticOperators {
 }
 
 	
-	
-	
+
 	
 	
 	
