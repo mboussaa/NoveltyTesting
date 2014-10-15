@@ -31,7 +31,7 @@ public class GeneticOperators {
 	Vector<TestSuite> TestSequence;
 	Vector<TestSuite> selectedTestSequence;
 	Vector<TestSuite> newTestSequence= new Vector<TestSuite>();;
-	TestSuite testSuite= new TestSuite();
+
 	
 	int testSequenceSize;
 	int selectedTestSequenceSize;
@@ -126,26 +126,41 @@ public class GeneticOperators {
 		//System.exit(0);
 	}
 	
-	public void mutation(){
-
-
+	public Vector<TestSuite> mutation(){
+		
+		do{
 				for (int i = 0; i < selectedTestSequence.size() ;i++) {
-			
+					TestSuite testSuite= new TestSuite();
 					for (int j = 0; j < selectedTestSequence.elementAt(i).tc.size(); j++) {
 						
-						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.get(j).m,selectedTestSequence.elementAt(i).tc.get(j).data);
+						Object[] data=new RandomData().getMutationDataGenerated(selectedTestSequence.elementAt(i).tc.elementAt(j).m,selectedTestSequence.elementAt(i).tc.elementAt(j).data);
 						//selectedTestSequence.elementAt(i).tc.get(j).setData(data);
 
-						//TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.get(j).m,data,null);
+						TestCase tc=new TestCase (selectedTestSequence.elementAt(i).tc.elementAt(j).m,data,null);
 
-						//testSuite.addTestCase(tc);
+						testSuite.addTestCase(tc);
 					}
-					//newTestSequence.add(testSuite);
+					newTestSequence.add(testSuite);
 				}
-		}
+			
+		}while(newTestSequence.size()!=TestSequence.size());
+		
+//		System.out.print("\n********************** new **********************");
+//		for (int i = 0; i < newTestSequence.size() ;i++) {
+//			System.out.println("\n");
+//			System.out.println("Sequence Num : "+(i+1));
+//			System.out.println("\nTest Suite size : "+newTestSequence.elementAt(i).tc.size());
+//			for (int j = 0; j < newTestSequence.elementAt(i).tc.size(); j++) {
+//				System.out.println("");	
+//				newTestSequence.elementAt(i).tc.elementAt(j).displayTestCase();
+//			}
+//			newTestSequence.elementAt(i).displayFitnessTestSuite();
+//		}System.exit(0);
+		return newTestSequence;
+	}
 
 	
-	public void crossover(){
+	public void crossover(){ 
 		
 		int crossoverPoint = 0;
 		int crossoverMethodPosition = 0;
@@ -181,7 +196,7 @@ public class GeneticOperators {
 				}
 				//newTestSequence.add(testSuite);
 			}//System.exit(0);
-			
+	
 			
 		}
 	

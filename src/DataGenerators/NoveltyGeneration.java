@@ -29,6 +29,8 @@ public class NoveltyGeneration {
 	
 	Vector<TestSuite> TestSequence= new Vector<TestSuite>();
 	
+	Vector<TestSuite> newTestSequence=new Vector<TestSuite>();
+	
 	Method[] methods;
 	
 	
@@ -61,7 +63,7 @@ public class NoveltyGeneration {
     		
     	}else{*/
     	  	//apply genetic operators + NS for next generation in case we detect some bugs
-            generateNextPopulation(TestSequence);
+    	newTestSequence=generateNextPopulation(TestSequence);
     		
     	//}
   	
@@ -70,11 +72,13 @@ public class NoveltyGeneration {
 
 	}
 	
-	public void generateNextPopulation(Vector<TestSuite> TestSequence){
+	public Vector<TestSuite> generateNextPopulation(Vector<TestSuite> TestSequence){
+		
 		GeneticOperators gp= new GeneticOperators(TestSequence);
 		gp.selection();
 		gp.crossover();
-		gp.mutation();
+		newTestSequence=gp.mutation();
+		return newTestSequence;
 	}
 	
 	public Vector<TestSuite> newPopulation() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, FileNotFoundException, ScriptException{
@@ -131,7 +135,7 @@ public class NoveltyGeneration {
 	    
 	    //instantiate the new test case
 	    TestCase tc=new TestCase (methods[j],data,outputs);
-
+	    tc.calculateTestCaseFitness();
 	    //add the test case to the current test suite
 		testSuite.addTestCase(tc);
 		}

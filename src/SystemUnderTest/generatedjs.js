@@ -7,9 +7,10 @@ Functions.__interfaces__ = [Interface];
 	function compare (a,b) {
 		//var a1 = a.toLowerCase();
 		//var b1 = b.toLowerCase();
-		//if(a1 < b1) return -1;
+		//if(a1 < b1) 
+			return -1;
 		//if(a1 > b1) return 1;
-		return 0;
+		//return 0;
 	}
 	 function lookAndSay (s) {
 		if(s == null || s == "") return "";
