@@ -54,7 +54,7 @@ public class NoveltyGeneration {
 		TestSequence=newPopulation();
 		
 		//start generations
-    	for (int k=0;k<CommonParameters.GENERATION_SIZE;k++){
+    	for (int k=0;k<CommonParameters.GENERATION_SIZE-1;k++){
  
     	
     	if (relevantTestSuites.size()==0){
@@ -64,10 +64,19 @@ public class NoveltyGeneration {
     	}else{
     	  	//apply genetic operators + NS for next generation in case we detect some bugs
     	newTestSequence=generateNextPopulation(TestSequence);
-    		
+    	//display all the generated test test suites
+		displayTestSequence(newTestSequence);
+		
+		//catch the best test suites
+		updateBestTestSuites(newTestSequence);
+
+		//display the best test suites
+		displayBestTestSuites(newTestSequence);
     	}
   	
     	}//end generation
+    	
+    	System.out.println("nb bugs: "+bestTestSuites.size());
 		
 
 	}
@@ -202,7 +211,7 @@ public class NoveltyGeneration {
 	
 	//catch the best test suites over generations
 	public void updateBestTestSuites(Vector<TestSuite> TestSequence){
-		
+		relevantTestSuites= new Vector<TestSuite>();
 		for (int i = 0; i < TestSequence.size(); i++) {
 			
 			if(TestSequence.elementAt(i).getTestSuiteFitnessValue()<1){
