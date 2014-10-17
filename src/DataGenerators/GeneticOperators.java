@@ -15,18 +15,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class GeneticOperators {
-
-
-	int k = 30;
-	double archiveThreshold = 0;
-	double archiveThresholdChangeFactor = 1.0;
-	double archiveThresholdMin;
-	public List<Behaviour> archive;
-	List<Behaviour> currentPop;
-	List<Behaviour> toArchive;
-	double addProbability;
-	DataGenerators.Behaviour b;
-
 	
 	String javainterfaceClass;
 	String jsinterfaceClass;
