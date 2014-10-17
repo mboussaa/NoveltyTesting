@@ -11,7 +11,7 @@ public class Behaviour {
 	
 	
 	public Behaviour(){
-		this.noveltyMetric=0;
+	//TODO
 	}
 	
 	
