@@ -7,6 +7,7 @@ public class TestSuite implements java.lang.Comparable{
 	Vector<TestCase> tc=null;
 	float testSuiteFitnessValue;
 	Boolean defect=false;
+	Behaviour b = new Behaviour() ;
 	
 	public TestSuite(){
 			 this.tc= new Vector<TestCase>();

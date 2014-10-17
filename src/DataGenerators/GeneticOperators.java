@@ -31,9 +31,10 @@ public class GeneticOperators {
 	String javainterfaceClass;
 	String jsinterfaceClass;
 	
+	Vector<TestSuite> Archive= new Vector<TestSuite>();;
 	Vector<TestSuite> TestSequence;
 	Vector<TestSuite> selectedTestSequence;
-	Vector<TestSuite> newTestSequence= new Vector<TestSuite>();;
+	Vector<TestSuite> newTestSequence= new Vector<TestSuite>();
 
 	
 	int testSequenceSize;
@@ -49,68 +50,24 @@ public class GeneticOperators {
 	
 	}
 	
-	
-	public double testNovelty(Behaviour b) {
-		// System.err.println(b);
-		
-		archive = new ArrayList<Behaviour>(k);
-		addProbability = 0;
-		int totalSize = archive.size() + currentPop.size();
-		double[] dist = new double[totalSize];
-		int i = 0;
-		int inArchiveCount = 0;
-		for (Behaviour b2 : archive) {
-			dist[i] = b.distanceFrom(b2);
-			
-			if (dist[i] < 0.0000001) inArchiveCount++;
-			i++;
-		}
-		
-		for (Behaviour b2 : currentPop) {
-			dist[i] = b.distanceFrom(b2);
-			
-			i++;
-		}
-		int kTemp = Math.min(totalSize, this.k);
-		Arrays.sort(dist);
-		double avgDist = 0;
-		for (i = 0; i < kTemp; i++) {
-			avgDist += dist[i];
-		}
-		avgDist /= kTemp;
-		
 
-		
-		if (inArchiveCount < k) {
-			
-			if (addProbability > 0) {
-				
-					toArchive.add(b);
-			
-			} else { // Using threshold archive addition method.
-				if (archiveThreshold == 0) {
-					archiveThreshold = b.defaultThreshold();
-			//		archiveThresholdMin = properties.getDoubleProperty(ARCHIVE_THRESHOLD_MIN, archiveThreshold * 0.05);
-	
-				}
-				
-					toArchive.add(b);
-				//}
-			}
-		}
-		
-		return avgDist;
-	}
-	
 	public void noveltySelection(){
-
 		for (int i = 0; i < TestSequence.size(); i++) {
+		Behaviour b = new Behaviour() ;
+		b.setNoveltyMetric(TestSequence.elementAt(i), TestSequence, Archive);
+		}
+		
+	//selectedTestSequence= new Vector<TestSuite>();
+		
+		for (int i = 0; i < TestSequence.size(); i++) {
+	
+		if(TestSequence.elementAt(i).getTestSuiteFitnessValue()<1){
 			
-		if(TestSequence.elementAt(i).tc.size()>0){
+			selectedTestSequence.add(TestSequence.elementAt(i));
 			
-			testNovelty(b);
 			}
 		}
+		//selectedTestSequenceSize=selectedTestSequence.size();
 	}
 	
 
