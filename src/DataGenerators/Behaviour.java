@@ -21,23 +21,47 @@ public class Behaviour {
 		
 	}
 	
-	public  double getDistFromPopulation(TestSuite testsuite,Vector<TestSuite> TestSequence) {
-		
-		return 0;
-	}
-	
-
 	public double getDistFromArchive(TestSuite testsuite,Vector<TestSuite> Archive) {
+		double distFromArchive=0;
+		double dist;
 		
-		return 0;
+		for (int i = 0; i < Archive.size(); i++) {
+			dist= distanceTestSuites(testsuite,Archive.elementAt(i));
+			distFromArchive+=dist;
+		}
+		
+		return distFromArchive;
 	}
 	
-	public double distanceTestsuites(TestSuite testsuite1,TestSuite testsuite2) {
-		
-		return 0;
+	public double getNoveltyMetric(){
+		return noveltyMetric;
 	}
 	
-	public double distanceTestcases(TestCase testcase1,TestCase testcase2) {
+	public  double getDistFromPopulation(TestSuite testsuite,Vector<TestSuite> TestSequence) {
+		double distFromPopulation=0;
+		double dist;
+		
+		for (int i = 0; i < TestSequence.size(); i++) {
+			dist= distanceTestSuites(testsuite,TestSequence.elementAt(i));
+			distFromPopulation+=dist;
+		}
+		
+		return distFromPopulation;
+	}
+	
+	public double distanceTestSuites(TestSuite testsuite1,TestSuite testsuite2) {
+		double distanceTestSuites=0;
+		double dist;
+		
+		for (int i = 0; i < testsuite1.getTestCaseSize(); i++) {
+			dist= distanceTestCases(testsuite1.getTestCase(i),testsuite2.getTestCase(i));
+			distanceTestSuites+=dist;
+		}
+		
+		return distanceTestSuites;
+	}
+	
+	public double distanceTestCases(TestCase testcase1,TestCase testcase2) {
 		double distanceNumbers = 0;
 		double distanceChar = 0;
 		double distanceStrings = 0;
@@ -48,54 +72,58 @@ public class Behaviour {
 		Object[] data1=testcase1.getData();
 		Object[] data2=testcase2.getData();
 		
-		 
 
 		for (int i=0;i<types.length;i++){
 			String t=types[i].getName();
 			 
 			if (t.equals("int") ||t.equals("float")|| t.equals("long")){
+				
 				distanceNumbers=distanceNumbers(data1[i], data2[i]);
 			}
 			
 			if (t.equals("char")){
-				distanceChar=distanceChar(data1[i].toString().charAt(0), data2[i].toString().charAt(0));
+				
+				distanceChar=distanceChar(data1[i], data2[i]);
 			}
 		
 			if (t.equals("java.lang.String")){
-				distanceStrings=distanceStrings(data1[i].toString(), data2[i].toString());
+				
+				distanceStrings=distanceStrings(data1[i], data2[i]);
 			}
 		}
 		
 		distanceTestcases= distanceNumbers+distanceChar+distanceStrings;
+		
 		return distanceTestcases;
 	}
 	
 	
-    public  int distanceStrings(String a, String b) {
+    public  int distanceStrings(Object a, Object b) {
     	//Levenshtein Distance
-    	
-        a = a.toLowerCase();
-        b = b.toLowerCase();
+    	String a1=a.toString().toLowerCase();
+    	String b1=b.toString().toLowerCase();
+
         // i == 0
-        int [] costs = new int [b.length() + 1];
+        int [] costs = new int [b1.length() + 1];
         for (int j = 0; j < costs.length; j++)
             costs[j] = j;
-        for (int i = 1; i <= a.length(); i++) {
+        for (int i = 1; i <= a1.length(); i++) {
             // j == 0; nw = lev(i - 1, j)
             costs[0] = i;
             int nw = i - 1;
-            for (int j = 1; j <= b.length(); j++) {
-                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+            for (int j = 1; j <= b1.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a1.charAt(i - 1) == b1.charAt(j - 1) ? nw : nw + 1);
                 nw = costs[j];
                 costs[j] = cj;
             }
         }
-        return costs[b.length()];
+        return costs[b1.length()];
     }
     
-    public int distanceChar(char a, char b){
-
-    	int diff = Character.toLowerCase(a) - Character.toLowerCase(b);
+    public int distanceChar(Object a, Object b){
+    	char a1=a.toString().charAt(0);
+    	char b1=b.toString().charAt(0);
+    	int diff = Character.toLowerCase(a1) - Character.toLowerCase(b1);
         return diff;
     }
     

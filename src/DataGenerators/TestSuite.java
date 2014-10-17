@@ -36,6 +36,14 @@ public class TestSuite implements java.lang.Comparable{
 			return testSuiteFitnessValue;
 	}
 	
+	public int getTestCaseSize(){
+		return  tc.size();
+}
+	
+	public TestCase getTestCase(int pos){
+		return  tc.elementAt(pos);
+}
+	
 	//display the fitness value of the current test suite
 	public void displayFitnessTestSuite(){
 			System.out.println(" \nTotal Fitness value : "+this.testSuiteFitnessValue );
